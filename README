@@ -1,0 +1,35 @@
+Sample files for hps kerberos support
+=====================================
+
+Your Blue Mind is on hps.foo.lan, on the same lan as active
+directory (172.16.45.3).
+
+Your active directory domain is foo.lan
+
+On AD
+-----
+
+Create a normal user for service authentication, for example:
+hps with the password TVz7eXfE!
+
+Then execute in cmd.exe prompt:
+setspn -A HTTP/hps.foo.lan hps
+
+The output should look like:
+Registering ServicePrincipalNames for CN=hps,CN=Users,DC=foo,DC=lan
+	    HTTP/hps.foo.lan
+Updated object
+
+Then you will generate a keytab:
+ktpass /out c:\hps.keytab /mapuser hps@FOO.LAN /princ HTTP/hps.foo.lan@FOO.LAN /pass TVz7eXfE! /kvno 0
+
+The output should look like:
+Targeting domain controller: WIN-BJ666K3L.foo.lan
+Using legacy password setting method
+Successfully mapped HTTP/hps.foo.lan to hps.
+Output keytab to c:\hps.keytab
+
+On Blue Mind
+------------
+
+Check Kerberos documentation from https://doc.bluemind.net
